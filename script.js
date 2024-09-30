@@ -1,4 +1,6 @@
 
+testbutton.onclick = () => alert("testttt button");
+
 function add (x, y) {
     return x + y;
 }
@@ -32,14 +34,10 @@ function operate (num, num2, operator) {
     return result;
 }
 
-function updateDisplay {
-
-display = document.getElementById('display-text');
-display.addEventListener('click', () => {
-    document.getElementById('title').style.color = 'red';
-});
-
-}
+document.querySelector('#buttons').addEventListener('click', event => {
+      const value = event.target.textContent;
+      console.log(value);
+    });
 
 /*
 
