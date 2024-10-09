@@ -1,0 +1,31 @@
+const blueButton = document.getElementById('btn');
+blueButton.addEventListener('click', () => {
+    document.getElementById('title').style.color = 'blue';
+});
+
+const redButton = document.getElementById('otherbtn');
+redButton.addEventListener('click', () => {
+    document.getElementById('title').style.color = 'red';
+});
+
+const title = document.getElementById('title');
+title.addEventListener('mouseover', () => {
+    //document.getElementById('title').style.color = 'green';
+    title.style.color = 'green';
+    title.style.fontFamily = 'Arial';
+});
+
+/*title.addEventListener('mouseout', () => {
+    title.style.color = 'white';
+});
+
+title.onmouseout = () => {
+    title.style.color = 'white';
+    title.style.fontFamily = 'Times New Roman';
+
+}
+
+    <div class="random content">
+    <button id="btn">I CHANGE EVERYTHING BLUE</button>
+    <button id="otherbtn">I CHANGE EVERYTHING RED</button>
+</div>

@@ -52,6 +52,9 @@ align-items: center;
     font-size: 40px;
     width:100%;
     align-self: center;
+    border-width: 2px;
+    border-style: solid;
+
 }
 
 #display {

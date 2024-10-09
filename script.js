@@ -1,43 +1,54 @@
-
 testbutton.onclick = () => alert("testttt button");
 
-function add (x, y) {
-    return x + y;
+function add(x, y) {
+  return x + y;
 }
 
-function subtract (x, y) {
-    return x - y;
+function subtract(x, y) {
+  return x - y;
 }
 
-function multiply (x, y) {
-    return x * y;
+function multiply(x, y) {
+  return x * y;
 }
 
-function divide (x, y) {
-    return x / y;
+function divide(x, y) {
+  return x / y;
 }
 
-let num = 0;
-let num2 = 0;
-let operator;
+function operate(num, num2, operator) {
+  if (operator == add) {
+    result = add(num, num2);
+  } else if (operator == subtract) {
+    result = subtract(num, num2);
+  } else if (operator == multiply) {
+    result = multiply(num, num2);
+  } else if (operator == divide) {
+    result = divide(num, num2);
+  }
+  return result;
+}
 
-function operate (num, num2, operator) {
-    if (operator == add ) {
-       result = add(num, num2);
-    } else if (operator == subtract) {
-        result = subtract(num, num2);
-    } else if (operator == multiply) {
-        result = multiply(num, num2)
-    } else if (operator == divide) {
-        result = divide(num, num2)
+textDisplay = document.querySelector("#display-text");
+
+const buttons = document.querySelectorAll(".button");
+
+buttons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    const buttonValue = event.target.textContent;
+    if (textDisplay.textContent === "0") {
+      textDisplay.textContent = buttonValue;
+    } else {
+      textDisplay.textContent += buttonValue;
     }
-    return result;
-}
+  });
+});
 
-document.querySelector('#buttons').addEventListener('click', event => {
-      const value = event.target.textContent;
-      console.log(value);
-    });
+const clearButton = document.querySelector('button[data-value="C"]');
+clearButton.addEventListener('click', () => {
+    textDisplay.textContent = '0';
+});
+
 
 /*
 
