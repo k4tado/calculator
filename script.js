@@ -1,4 +1,4 @@
-testbutton.onclick = () => alert("testttt button");
+//testbutton.onclick = () => alert("testttt button");
 
 function add(x, y) {
   return x + y;
@@ -16,7 +16,7 @@ function divide(x, y) {
   return x / y;
 }
 
-function operate(num, num2, operator) {
+function calculate(num, num2, operator) {
   if (operator == add) {
     result = add(num, num2);
   } else if (operator == subtract) {
@@ -29,9 +29,9 @@ function operate(num, num2, operator) {
   return result;
 }
 
-textDisplay = document.querySelector("#display-text");
+textDisplay = document.querySelector("#display");
 
-const buttons = document.querySelectorAll(".button");
+const buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
