@@ -14,25 +14,31 @@ align-items: center;
     width: 350px;
     height: 500px;
     border-color:#000000;
+    border-width: 2px;
+    border-style: solid;
     border-radius: 20px;
     align-items: center;
-    background-color: rgb(49, 50, 51);
+    background-color: rgb(131, 131, 131);
 }
 
 #display {
-    margin-top: 80px;
+    margin-top: 60px;
     margin-bottom: 50px;
-    color: rgb(75, 132, 255);
-    background-color: rgb(7, 7, 7);
+    height: 80px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
     font-family: consolas;
-    font-size: 40px;
+    font-size: 50px;
     width: 100%;
     align-self: center;
     border: none;
     display: flex;
-    justify-content: flex-end;
+    justify-content: right;
     padding: 10px 0px 10px;
     text-indent: 50px;
+    box-shadow: 0px 0px 0px 5px rgb(85, 85, 85) inset;
+    box-sizing: border-box;
+    padding-right: 20px;
 }
 
 button {
@@ -50,4 +56,20 @@ button {
 
 button:hover {
     background-color: lightgray;
+}
+
+button:active {
+    background-color: rgb(177, 177, 177);
+}
+
+.operator {
+    background-color: rgba(0, 201, 252, 0.822);
+}
+
+.operator:hover {
+    background-color: rgba(0, 132, 165, 0.822);
+}
+
+.operator:active {
+    background-color: rgba(0, 75, 94, 0.822);
 }
