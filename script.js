@@ -3,13 +3,19 @@
 let firstNumber = null;
 let secondNumber = null;
 let operator = null;
+let isButtonClicked = null;
 //let intermediateResult = null;
+
+const plusButton = document.getElementById("plusButton");
+const minusButton = document.getElementById("minusButton");
+const multiButton = document.getElementById("multiButton");
+const divButton = document.getElementById("divButton");
 
 // css references
 textDisplay = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
 const opButtons = document.querySelector(".operator");
-
+const digit = document.querySelector(".digit");
 
 function calculate(num, num2, operator) {
   if (operator == "+") {
@@ -41,31 +47,90 @@ function divide(x, y) {
 }
 
 // managing display
+function highlightOp(operator) {
+  if (operator === "+") {
+    operator = plusButton;
+  } else if (operator === "-") {
+    operator = minusButton;
+  } else if (operator === "*") {
+    operator = multiButton;
+  } else if (operator === "/") {
+    operator = minusButton;
+  }
+  operator.style.backgroundColor = "yellow";
+}
+
+function removeHighlightOp(operator) {
+  if (operator === "+") {
+    operator = plusButton;
+  } else if (operator === "-") {
+    operator = minusButton;
+  } else if (operator === "*") {
+    operator = multiButton;
+  } else if (operator === "/") {
+    operator = minusButton;
+  }
+  operator.style.backgroundColor = "rgba(0, 201, 252, 0.822)";
+}
 
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
     const buttonValue = event.target.textContent;
-    const plusButton = document.getElementById(buttonValue);
 
-      plusButton.style.backgroundColor = "yellow";
+    // remove the initial 0 when first value is entered. ensures display does not show an operator
+    if (textDisplay.textContent === "0" && !isNaN(buttonValue)) {
+      textDisplay.textContent = buttonValue;
+    }
 
+    // only allow digits to update display and only allow "." to be pressed once
+    else if (
+      !isNaN(buttonValue) ||
+      (buttonValue == "." && !textDisplay.textContent.includes("."))
+    ) {
+      textDisplay.textContent += buttonValue;
+    }
 
+    // clear the display
+    if (buttonValue === "C") {
+      textDisplay.textContent = "0";
+      firstNumber = 0;
+      secondNumber = 0;
+      result = 0;
+    }
 
+    // DEL will remove last element of the string in textDisplay
+    if (!(textDisplay.textContent == "") || textDisplay.textContent == "0") {
+      if (buttonValue === "DEL") {
+        textDisplay.textContent = textDisplay.textContent.slice(0, -1);
+        if (textDisplay.textContent == "") {
+          textDisplay.textContent = "0";
+        }
+      }
+    }
 
+    // operator logic
+    if (
+      buttonValue == "+" ||
+      buttonValue == "-" ||
+      buttonValue == "*" ||
+      buttonValue == "/"
+    ) {
+      operator = buttonValue;
+      highlightOp(operator);
 
+      firstNumber = parseFloat(textDisplay.textContent);
+      textDisplay.textContent = "0";
+    }
 
-  })
+    // equals logic
+    if (buttonValue === "=") {
+      secondNumber = parseFloat(textDisplay.textContent);
+      let result = calculate(firstNumber, secondNumber, operator);
+      textDisplay.textContent = result;
+      removeHighlightOp(operator);
+    }
+  });
 });
-
-
-
-
-
-
-
-
-
-
 
 /*
  Press number button and store it in firstNumber
