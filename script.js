@@ -27,6 +27,8 @@ function handleClear() {
   removeHighlightOp(operator);
 }
 
+
+// -------------------- HANDLE INPUTS -------------------- //
 function handleEquals() {
   secondNumber = parseFloat(textDisplay.textContent);
   let result = calculate(firstNumber, secondNumber, operator);
@@ -51,14 +53,21 @@ function handleDelete() {
 function handleDigitInput(buttonValue) {
       if (textDisplay.textContent === "0") {
         textDisplay.textContent = buttonValue;
-      } else if (buttonValue === "." && !textDisplay.textContent.includes(".")) {
-        textDisplay.textContent += buttonValue;
       } else if (!isNaN(buttonValue)) {
         textDisplay.textContent += buttonValue;
       }
 }
 
-// calculate function
+function handleDecimalPoint(buttonValue) {
+  if (buttonValue === "." && !textDisplay.textContent.includes(".")) {
+    textDisplay.textContent += buttonValue;
+  }
+}
+// --------------------^HANDLE INPUTS^-------------------- //
+
+
+
+// -------------------- Calc Logic -------------------- //
 function calculate(num, num2, operator) {
   if (operator == "+") {
     result = add(num, num2);
@@ -75,7 +84,6 @@ function calculate(num, num2, operator) {
   return result;
 }
 
-// basic operator functions
 function add(x, y) {
   return x + y;
 }
@@ -88,6 +96,9 @@ function multiply(x, y) {
 function divide(x, y) {
   return x / y;
 }
+// --------------------^Calc Logic^-------------------- //
+
+
 
 // highlight operator function
 function highlightOp(operator) {
@@ -115,20 +126,23 @@ buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
     const buttonValue = event.target.textContent;
 
-    if (!isNaN(buttonValue) || buttonValue === ".") {
+    if (!isNaN(buttonValue)) {
       handleDigitInput(buttonValue);
     }
-    if (buttonValue === "C") {
+    else if (buttonValue === "C") {
       handleClear();
     }
-    if (buttonValue === "DEL") {
+    else if (buttonValue === "DEL") {
       handleDelete();
     }
-    if (buttonValue == "+" || buttonValue == "-" || buttonValue == "*" || buttonValue == "/") {
+    else if (buttonValue == "+" || buttonValue == "-" || buttonValue == "*" || buttonValue == "/") {
       handleOperator(buttonValue);
     }
-    if (buttonValue === "=") {
+    else if (buttonValue === "=") {
       handleEquals();
+    }
+    else if (buttonValue === ".") {
+      handleDecimalPoint();
     }
   });
 });
