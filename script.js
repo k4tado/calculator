@@ -18,16 +18,6 @@ const buttons = document.querySelectorAll("button");
 const opButtons = document.querySelector(".operator");
 const digit = document.querySelector(".digit");
 
-// clear display
-function handleClear() {
-  textDisplay.textContent = "0";
-  firstNumber = 0;
-  secondNumber = 0;
-  result = 0;
-  removeHighlightOp(operator);
-}
-
-
 // -------------------- HANDLE INPUTS -------------------- //
 function handleEquals() {
   secondNumber = parseFloat(textDisplay.textContent);
@@ -40,7 +30,7 @@ function handleOperator(buttonValue) {
   operator = buttonValue;
   highlightOp(operator);
   firstNumber = parseFloat(textDisplay.textContent);
-  textDisplay.textContent = operator;
+  textDisplay.textContent = "";
 }
 
 function handleDelete() {
@@ -62,6 +52,14 @@ function handleDecimalPoint(buttonValue) {
   if (buttonValue === "." && !textDisplay.textContent.includes(".")) {
     textDisplay.textContent += buttonValue;
   }
+}
+
+function handleClear() {
+  textDisplay.textContent = "0";
+  firstNumber = 0;
+  secondNumber = 0;
+  result = 0;
+  removeHighlightOp(operator);
 }
 // --------------------^HANDLE INPUTS^-------------------- //
 
@@ -142,7 +140,7 @@ buttons.forEach((button) => {
       handleEquals();
     }
     else if (buttonValue === ".") {
-      handleDecimalPoint();
+      handleDecimalPoint(buttonValue);
     }
   });
 });
