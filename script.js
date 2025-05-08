@@ -33,10 +33,21 @@ function handleEquals() {
 }
 
 function handleOperator(buttonValue) {
+
+  if (!operatorFlag) {
   operator = buttonValue;
   highlightOp(operator);
   operatorFlag = true;
   clearDisplay();
+  } else if (operatorFlag) {
+    firstNumber = calculate(parseFloat(firstNumber),parseFloat(secondNumber),operator)
+    removeHighlightOp();
+    operator = buttonValue;
+    highlightOp(operator);
+    textDisplay.textContent = firstNumber;
+    secondNumber = "";
+    equalsFlag = true;
+  }
 }
 
 function handleDelete() {
@@ -53,11 +64,15 @@ function handleDelete() {
 }
 
 function handleDigitInput(buttonValue) {
-  // remove leading 0 for default display
+  if (equalsFlag === true && operatorFlag === true) {
+    clearDisplay();
+    equalsFlag = false;
+  }
   if (equalsFlag === true) {
     handleClear();
     equalsFlag = false;
   }
+    // remove leading 0 for default display
   if (textDisplay.textContent === "0") {
     textDisplay.textContent = buttonValue;
 
@@ -89,8 +104,9 @@ function handleClear() {
   firstNumber = "";
   secondNumber = "";
   result = null;
-  removeHighlightOp(operator);
+  removeHighlightOp();
   operatorFlag = false;
+  operator = null;
 }
 
 function clearDisplay() {
@@ -144,7 +160,7 @@ function highlightOp(operator) {
 }
 
 // remove hightlight opererator function
-function removeHighlightOp(operator) {
+function removeHighlightOp() {
   document
     .querySelectorAll(".operator")
     .forEach((btn) => (btn.style.backgroundColor = "rgba(0, 201, 252, 0.822)"));
