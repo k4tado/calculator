@@ -1,10 +1,11 @@
 //testbutton.onclick = () => alert("testttt button");
 
 // variable initilizations
-let firstNumber = null;
-let secondNumber = null;
+let firstNumber = "";
+let secondNumber = "";
 let operator = null;
-let isButtonClicked = null;
+let operatorFlag = false;
+let equalsFlag = false;
 
 // button initilizations
 const plusButton = document.getElementById("plusButton");
@@ -19,51 +20,83 @@ const opButtons = document.querySelector(".operator");
 const digit = document.querySelector(".digit");
 
 // -------------------- HANDLE INPUTS -------------------- //
+
 function handleEquals() {
-  secondNumber = parseFloat(textDisplay.textContent);
-  let result = calculate(firstNumber, secondNumber, operator);
+  let result = calculate(
+    parseFloat(firstNumber),
+    parseFloat(secondNumber),
+    operator
+  );
   textDisplay.textContent = result;
   removeHighlightOp(operator);
+  equalsFlag = true;
 }
 
 function handleOperator(buttonValue) {
   operator = buttonValue;
   highlightOp(operator);
-  firstNumber = parseFloat(textDisplay.textContent);
-  textDisplay.textContent = "";
+  operatorFlag = true;
+  clearDisplay();
 }
 
 function handleDelete() {
   textDisplay.textContent = textDisplay.textContent.slice(0, -1);
-        if (textDisplay.textContent == "") {
-          textDisplay.textContent = "0";
-        }
+  if (textDisplay.textContent == "") {
+    textDisplay.textContent = "0";
+  }
+
+  if (!operatorFlag) {
+    firstNumber = firstNumber.slice(0, -1);
+  } else if (operatorFlag) {
+    secondNumber += secondNumber.slice(0, -1);
+  }
 }
 
 function handleDigitInput(buttonValue) {
-      if (textDisplay.textContent === "0") {
-        textDisplay.textContent = buttonValue;
-      } else if (!isNaN(buttonValue)) {
-        textDisplay.textContent += buttonValue;
-      }
+  // remove leading 0 for default display
+  if (equalsFlag === true) {
+    handleClear();
+    equalsFlag = false;
+  }
+  if (textDisplay.textContent === "0") {
+    textDisplay.textContent = buttonValue;
+
+    // check if the button pressed is a number pressed and if so, update display
+  } else if (!isNaN(buttonValue)) {
+    textDisplay.textContent += buttonValue;
+  }
+
+  if (!operatorFlag) {
+    firstNumber += buttonValue;
+  } else if (operatorFlag) {
+    secondNumber += buttonValue;
+  }
 }
 
 function handleDecimalPoint(buttonValue) {
   if (buttonValue === "." && !textDisplay.textContent.includes(".")) {
     textDisplay.textContent += buttonValue;
+    if (!operatorFlag) {
+      firstNumber += buttonValue;
+    } else if (operatorFlag) {
+      secondNumber += buttonValue;
+    }
   }
 }
 
 function handleClear() {
   textDisplay.textContent = "0";
-  firstNumber = 0;
-  secondNumber = 0;
-  result = 0;
+  firstNumber = "";
+  secondNumber = "";
+  result = null;
   removeHighlightOp(operator);
+  operatorFlag = false;
+}
+
+function clearDisplay() {
+  textDisplay.textContent = "0";
 }
 // --------------------^HANDLE INPUTS^-------------------- //
-
-
 
 // -------------------- Calc Logic -------------------- //
 function calculate(num, num2, operator) {
@@ -96,8 +129,6 @@ function divide(x, y) {
 }
 // --------------------^Calc Logic^-------------------- //
 
-
-
 // highlight operator function
 function highlightOp(operator) {
   if (operator === "+") {
@@ -119,27 +150,27 @@ function removeHighlightOp(operator) {
     .forEach((btn) => (btn.style.backgroundColor = "rgba(0, 201, 252, 0.822)"));
 }
 
-// calculator button event listener 
+// calculator button event listener
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
     const buttonValue = event.target.textContent;
 
     if (!isNaN(buttonValue)) {
       handleDigitInput(buttonValue);
-    }
-    else if (buttonValue === "C") {
+    } else if (buttonValue === "C") {
       handleClear();
-    }
-    else if (buttonValue === "DEL") {
+    } else if (buttonValue === "DEL") {
       handleDelete();
-    }
-    else if (buttonValue == "+" || buttonValue == "-" || buttonValue == "*" || buttonValue == "/") {
+    } else if (
+      buttonValue == "+" ||
+      buttonValue == "-" ||
+      buttonValue == "*" ||
+      buttonValue == "/"
+    ) {
       handleOperator(buttonValue);
-    }
-    else if (buttonValue === "=") {
+    } else if (buttonValue === "=") {
       handleEquals();
-    }
-    else if (buttonValue === ".") {
+    } else if (buttonValue === ".") {
       handleDecimalPoint(buttonValue);
     }
   });
