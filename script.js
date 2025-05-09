@@ -22,13 +22,9 @@ const digit = document.querySelector(".digit");
 // -------------------- HANDLE INPUTS -------------------- //
 
 function handleEquals() {
-  let result = calculate(
-    parseFloat(firstNumber),
-    parseFloat(secondNumber),
-    operator
-  );
+  let result = calculate(parseFloat(firstNumber),parseFloat(secondNumber),operator);
   textDisplay.textContent = result;
-  removeHighlightOp(operator);
+  firstNumber = result;
   equalsFlag = true;
 }
 
@@ -44,7 +40,6 @@ function handleOperator(buttonValue) {
       parseFloat(secondNumber),
       operator
     );
-    removeHighlightOp();
     operator = buttonValue;
     highlightOp(operator);
     textDisplay.textContent = firstNumber;
@@ -63,7 +58,7 @@ function handleDelete() {
     if (!operatorFlag) {
       firstNumber = firstNumber.slice(0, -1);
     } else if (operatorFlag) {
-      secondNumber += secondNumber.slice(0, -1);
+      secondNumber = secondNumber.slice(0, -1);
     }
   }
 }
@@ -152,6 +147,7 @@ function divide(x, y) {
 
 // highlight operator function
 function highlightOp(operator) {
+  removeHighlightOp();
   if (operator === "+") {
     operator = plusButton;
   } else if (operator === "-") {
@@ -161,14 +157,15 @@ function highlightOp(operator) {
   } else if (operator === "/") {
     operator = divButton;
   }
-  operator.style.backgroundColor = "yellow";
+  operator.classList.add("axtive");
+  //operator.style.backgroundColor = "yellow";
 }
 
 // remove hightlight opererator function
 function removeHighlightOp() {
   document
     .querySelectorAll(".operator")
-    .forEach((btn) => (btn.style.backgroundColor = "rgba(0, 201, 252, 0.822)"));
+    .forEach((btn) => btn.classList.remove("axtive"));
 }
 
 // calculator button event listener

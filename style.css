@@ -74,3 +74,7 @@ button {
 .operator:active {
     background-color: rgba(0, 75, 94, 0.822);
 }
+
+.axtive {
+    background-color: yellow;
+}
