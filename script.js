@@ -33,14 +33,17 @@ function handleEquals() {
 }
 
 function handleOperator(buttonValue) {
-
   if (!operatorFlag) {
-  operator = buttonValue;
-  highlightOp(operator);
-  operatorFlag = true;
-  clearDisplay();
+    operator = buttonValue;
+    highlightOp(operator);
+    operatorFlag = true;
+    clearDisplay();
   } else if (operatorFlag) {
-    firstNumber = calculate(parseFloat(firstNumber),parseFloat(secondNumber),operator)
+    firstNumber = calculate(
+      parseFloat(firstNumber),
+      parseFloat(secondNumber),
+      operator
+    );
     removeHighlightOp();
     operator = buttonValue;
     highlightOp(operator);
@@ -51,15 +54,17 @@ function handleOperator(buttonValue) {
 }
 
 function handleDelete() {
-  textDisplay.textContent = textDisplay.textContent.slice(0, -1);
-  if (textDisplay.textContent == "") {
-    textDisplay.textContent = "0";
-  }
+  if (!equalsFlag) {
+    textDisplay.textContent = textDisplay.textContent.slice(0, -1);
+    if (textDisplay.textContent == "") {
+      textDisplay.textContent = "0";
+    }
 
-  if (!operatorFlag) {
-    firstNumber = firstNumber.slice(0, -1);
-  } else if (operatorFlag) {
-    secondNumber += secondNumber.slice(0, -1);
+    if (!operatorFlag) {
+      firstNumber = firstNumber.slice(0, -1);
+    } else if (operatorFlag) {
+      secondNumber += secondNumber.slice(0, -1);
+    }
   }
 }
 
@@ -72,7 +77,7 @@ function handleDigitInput(buttonValue) {
     handleClear();
     equalsFlag = false;
   }
-    // remove leading 0 for default display
+  // remove leading 0 for default display
   if (textDisplay.textContent === "0") {
     textDisplay.textContent = buttonValue;
 
